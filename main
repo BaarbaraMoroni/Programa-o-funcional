@@ -1,0 +1,56 @@
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        List<Produto> produtos = Arrays.asList(
+                new Produto("Produto 1", new BigDecimal("100.00"), 0),
+                new Produto("Produto 2", new BigDecimal("50.00"), 3),
+                new Produto("Produto 3", new BigDecimal("200.00"), 0),
+                new Produto("Produto 4", new BigDecimal("75.00"), 2),
+                new Produto("Produto 5", new BigDecimal("120.00"), 0)
+        );
+
+        BigDecimal total = produtos.stream()
+                .filter(p -> p.getQuantidade() == 0)
+                .map(p -> p.getPreco())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        System.out.println("Produtos: " + produtos);
+        System.out.println("Total de produtos com estoque zerado: " + total);
+    }
+}
+
+class Produto {
+    private String nome;
+    private BigDecimal preco;
+    private int quantidade;
+
+    public Produto(String nome, BigDecimal preco, int quantidade) {
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "nome='" + nome + '\'' +
+                ", preco=" + preco +
+                ", quantidade=" + quantidade +
+                '}';
+    }
+}
